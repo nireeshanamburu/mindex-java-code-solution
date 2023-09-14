@@ -1,0 +1,67 @@
+{
+	"info": {
+		"_postman_id": "33f7a047-026b-4169-93e4-8202da72b58d",
+		"name": "Mindex-PostmanCollection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "19409307"
+	},
+	"item": [
+		{
+			"name": "GetEmployee",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "localhost:8080/employee/16a596ae-edd3-4847-99fe-c4518e82c86f"
+			},
+			"response": []
+		},
+		{
+			"name": "GetEmployeeReports",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "localhost:8080/employee/reportingStructure/16a596ae-edd3-4847-99fe-c4518e82c86f"
+			},
+			"response": []
+		},
+		{
+			"name": "CreateCompensation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"employeeId\": \"16a596ae-edd3-4847-99fe-c4518e82c86f\",\r\n  \"salary\": 8000.00,\r\n  \"effectiveDate\": \"2023-09-15\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8080/employee/compensation"
+			},
+			"response": []
+		},
+		{
+			"name": "GetCompensation",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"employeeId\": \"16a596ae-edd3-4847-99fe-c4518e82c86f\",\r\n  \"salary\": 8000.00,\r\n  \"effectiveDate\": \"2023-09-15\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8080/employee/compensation/create"
+			},
+			"response": []
+		}
+	]
+}

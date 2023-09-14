@@ -1,5 +1,6 @@
 package com.mindex.challenge.service.impl;
 
+import com.mindex.challenge.data.Compensation;
 import com.mindex.challenge.data.Employee;
 import com.mindex.challenge.service.EmployeeService;
 import org.junit.Before;
@@ -12,8 +13,10 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.client.HttpClientErrorException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -82,5 +85,29 @@ public class EmployeeServiceImplTest {
         assertEquals(expected.getLastName(), actual.getLastName());
         assertEquals(expected.getDepartment(), actual.getDepartment());
         assertEquals(expected.getPosition(), actual.getPosition());
+    }
+
+    @Test
+    public void testCreateReadCompensation() {
+        // Test create compensation
+        String createCompensationUrl = "http://localhost:" + port + "/employee/compensation/create";
+        Compensation compensationToCreate = new Compensation();
+        compensationToCreate.setEmployeeId("nonexistent-employee-id"); // Non-existent employee
+
+        try {
+            restTemplate.postForEntity(createCompensationUrl, compensationToCreate, Object.class);
+        } catch (HttpClientErrorException ex) {
+            // Expecting a 400 Bad Request status code
+            assertEquals(HttpStatus.BAD_REQUEST, ex.getStatusCode());
+        }
+
+        // Test read compensation for a non-existent employee
+        String readCompensationUrl = "http://localhost:" + port + "/employee/compensation/nonexistent-employee-id";
+        try {
+            restTemplate.getForEntity(readCompensationUrl, Object.class);
+        } catch (HttpClientErrorException ex) {
+            // Expecting a 404 Not Found status code
+            assertEquals(HttpStatus.NOT_FOUND, ex.getStatusCode());
+        }
     }
 }
